@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "Manrope", sans-serif;
+}
+.manrope {
+  font-family: "Manrope", sans-serif;
+}
+*::placeholder {
+  font-weight: 400;
+  font-size: 14px;
+}

@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgres"
+    url      = env("DATABASE_URL")
+}
+
+model JAS { 
+    id String @id @unique @default(uuid())
+    email String @unique
+    firstName String
+    lastName String 
+    birthDate DateTime
+    phoneNumber String
+    isLDSMember Boolean
+    age Int
+    approved Boolean
+    profile_picture_url String
+    ward Ward @relation(fields: [wardId], references: [id])
+    wardId String
+}
+
+model Ward {
+    id String @id @unique @default(uuid())
+    name String @unique
+    stake Stake @relation(fields: [stakeId], references: [id])
+    stakeId String 
+    enrrolledJAS JAS[]
+} 
+
+model Stake {
+    id String @id @unique @default(uuid())
+    name String @unique
+    area Area @relation(fields: [areaId], references: [id])
+    areaId String 
+    wards Ward[]
+}
+
+model Area {
+    id String @id @unique @default(uuid())
+    name String
+    stakes Stake[]
+}
