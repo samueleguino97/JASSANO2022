@@ -26,45 +26,56 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="h-screen w-full">
-        <div className="relative h-4/5 ">
-          <Image
-            src={Banner}
-            className="absolute object-cover z-[-1] pointer-events-none  select-none"
-            layout="fill"
-          />
-          <div
-            className="absolute w-full h-full  z-[-1] flex items-center  pointer-events-none "
-            style={{
-              background:
-                "linear-gradient(102.7deg, #000000 0%, rgba(0, 0, 0, 0) 67.73%, rgba(0, 0, 0, 0) 100.81%)",
-            }}
-          >
-            <div className="container text-white font-bold mx-auto manrope text-[64px] px-12">
-              <div className="text-[18px] mb-2 text-[#FF7D00]">
-                JAS SANO 2022 - Santa Cruz
-              </div>
-              <div className="text-white leading-[70px]">“Mi Casa y yo</div>
-              <div> Serviremos al Señor”</div>
-              <div className="mt-4 font-light text-[32px]"> Josue 24:15</div>
-            </div>
-          </div>
-          <div className=" absolute w-full">
-            <header className="h-28 w-full flex container mx-auto justify-between items-center">
-              <div>
-                <Image src={Logo} />
+        <div className="relative w-full h-[250px] md:h-4/5 ">
+          <div className=" md:absolute w-full">
+            <header className=" pt-6 md:h-28 px-4 w-full flex container mx-auto justify-between items-center">
+              <div className="flex items-center">
+                <div className=" w-12 h-6 md:h-12 md:w-24 relative">
+                  <Image src={Logo} objectFit="contain" layout="fill" />
+                </div>
+                <div className='text-white h-full text-center font-["Nunito",_sans-serif] text-[10px] md:text-[16px]'>
+                  <div className="flex font-black">
+                    <span className="text-[#FF7D00] mr-2">JAS</span> 2022
+                  </div>
+                  <div className="text-[7px] md:text-[10px]">CONVENCION</div>
+                </div>
               </div>
               <div className="flex gap-8 items-center text-white">
-                <div>Conoce mas</div>
-                <div>Normas</div>
-                <div>Donde va a ser?</div>
-                <button className="bg-[#FF7D00] px-[24px] text-black rounded-xl py-[12px]">
+                <div className=" hidden md:flex gap-8 items-center ">
+                  <div>Conoce mas</div>
+                  <div>Normas</div>
+                  <div>Donde va a ser?</div>
+                </div>
+                <button className="bg-[#FF7D00] text-[10px] md:text-[14px] px-[24px] text-black rounded-xl py-[12px]">
                   Inscribete
                 </button>
               </div>
             </header>
           </div>
+          <Image
+            src={Banner}
+            className="md:absolute object-cover z-[-1] pointer-events-none  select-none"
+            layout="fill"
+            objectFit="cover"
+          />
+          <div
+            className="absolute top-0 w-full h-full  z-[-1] pb-8 flex items-end md:items-center  pointer-events-none "
+            style={{
+              background:
+                "linear-gradient(102.7deg, #000000 0%, rgba(0, 0, 0, 0) 67.73%, rgba(0, 0, 0, 0) 100.81%)",
+            }}
+          >
+            <div className="md:container text-white font-bold md:mx-auto manrope text-[24px] md:text-[64px] px-4 md:px-12">
+              <div className="text-white md:leading-[70px]">“Mi Casa y yo</div>
+              <div> Serviremos al Señor”</div>
+              <div className="mt-2 md:mt-4 font-light text-sm md:text-[32px]">
+                {" "}
+                Josue 24:15
+              </div>
+            </div>
+          </div>
         </div>
-        <main className="container mx-auto pt-16">
+        <main className="container mx-auto px-4 pt-8 md:pt-16">
           <LandingInfo
             title="Tema"
             description='"Mi casa y yo serviremos al señor”'
@@ -72,7 +83,7 @@ const Home: NextPage = () => {
             link="www.google.com"
             image={Jesus}
           />
-          <div className="h-20" />
+          <div className=" h-8 md:h-20" />
           <LandingInfo
             title="Lema"
             description="Josue 24:15"
@@ -81,7 +92,7 @@ const Home: NextPage = () => {
             reverse
             image={Book}
           />
-          <div className="h-20" />
+          <div className=" h-8 md:h-20" />
           <LandingInfo
             title="Himno"
             description="#154 Haz tu lo justo"

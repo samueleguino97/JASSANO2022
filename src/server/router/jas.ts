@@ -16,6 +16,7 @@ export const jasRouter = createRouter()
         data: {
           ...input,
           age: 2,
+          isLDSMember: false,
           approved: false,
           profile_picture_url: "",
           phoneNumber: input.phoneNumber.toString(),
