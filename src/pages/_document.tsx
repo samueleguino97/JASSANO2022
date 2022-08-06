@@ -5,6 +5,9 @@ export default function Document() {
   return (
     <Html>
       <Head>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+        <title>JAS SANO 2022 - Santa Cruz</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
