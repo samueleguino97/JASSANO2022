@@ -12,3 +12,10 @@
   font-weight: 400;
   font-size: 14px;
 }
+img {
+  transition: all 1s ease-in-out;
+}
+
+*:hover > img {
+  transform: scale(1.1);
+}
