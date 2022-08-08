@@ -124,17 +124,46 @@ function RegistrationFormModal({
         </Transition.Child>
       </Transition>
     ));
-    const token = await executeRecaptcha("enquiryFormSubmit");
-    const response = await mutateAsync({
-      captchaToken: token,
-      ...data,
-      wardId: data.ward,
-      birthDate: new Date(data.birthDate + "T00:00"),
-      phoneNumber: parseInt(data.phone),
-    });
-    if (response.id) {
-      console.log("creation successful");
-      reset();
+    try {
+      const token = await executeRecaptcha("enquiryFormSubmit");
+
+      const response = await mutateAsync({
+        captchaToken: token,
+        ...data,
+        wardId: data.ward,
+        birthDate: new Date(data.birthDate + "T00:00"),
+        phoneNumber: parseInt(data.phone),
+      });
+      if (response?.id) {
+        console.log("creation successful");
+        reset();
+        toast.custom((t) => (
+          <Transition appear show={t.visible} as={Fragment}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div
+                className={`bg-orange-400 max-w-md w-full px-6 py-4 shadow-md rounded-xl `}
+              >
+                <div className="text-white mb-2 font-bold">
+                  Registro exitoso! :)
+                </div>
+              </div>
+            </Transition.Child>
+          </Transition>
+        ));
+        closeModal();
+      }
+    } catch (error: any) {
+      if (error?.code === -32603) {
+        console.dir(error);
+      }
       toast.custom((t) => (
         <Transition appear show={t.visible} as={Fragment}>
           <Transition.Child
@@ -147,16 +176,14 @@ function RegistrationFormModal({
             leaveTo="opacity-0"
           >
             <div
-              className={`bg-orange-400 max-w-md w-full px-6 py-4 shadow-md rounded-xl `}
+              className={`bg-red-400 max-w-md w-full font-normal px-6 py-4 shadow-md rounded-xl `}
             >
-              <div className="text-white mb-2 font-bold">
-                Registro exitoso! :)
-              </div>
+              <div className="text-black mb-2 font-black">Error</div>
+              {error?.message}
             </div>
           </Transition.Child>
         </Transition>
       ));
-      closeModal();
     }
   });
   console.log(stake);
