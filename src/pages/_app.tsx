@@ -4,9 +4,25 @@ import type { AppRouter } from "../server/router";
 import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import "../styles/globals.css";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import { env } from "../env/client.mjs";
+import { Toaster } from "react-hot-toast";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
-  return <Component {...pageProps} />;
+  return (
+    <GoogleReCaptchaProvider
+      reCaptchaKey={env.NEXT_PUBLIC_RECAPTCHA_KEY}
+      scriptProps={{
+        async: false,
+        defer: false,
+        appendTo: "head",
+        nonce: undefined,
+      }}
+    >
+      <Component {...pageProps} />
+      <Toaster />
+    </GoogleReCaptchaProvider>
+  );
 };
 
 const getBaseUrl = () => {

@@ -10,14 +10,10 @@ import LandingInfo from "../components/LandingInfo";
 import Face from "../assets/face.png";
 import Whats from "../assets/whats.png";
 import Inst from "../assets/inst.png";
-
-type TechnologyCardProps = {
-  name: string;
-  description: string;
-  documentation: string;
-};
-
+import RegistrationFormModal from "../components/RegistrationFormModal";
+import { useState } from "react";
 const Home: NextPage = () => {
+  const [registering, setRegistering] = useState(false);
   return (
     <>
       <Head>
@@ -43,13 +39,19 @@ const Home: NextPage = () => {
                   <div className="text-[7px] md:text-[10px]">CONVENCION</div>
                 </div>
               </div>
-              <div className="flex gap-8 items-center text-white">
-                <div className=" hidden md:flex gap-8 items-center ">
+              <div className="z-[5] flex gap-8 items-center text-white">
+                <div className=" hidden  gap-8 items-center ">
                   <div>Conoce mas</div>
                   <div>Normas</div>
                   <div>Donde va a ser?</div>
                 </div>
-                <button className="bg-[#FF7D00] text-[10px] md:text-[14px] px-[24px] text-black rounded-xl py-[12px]">
+                <button
+                  onClick={() => {
+                    setRegistering(true);
+                    console.log("sam");
+                  }}
+                  className="bg-[#FF7D00] cursor-pointer text-[10px] md:text-[14px] px-[24px] text-black rounded-xl py-[12px]"
+                >
                   Inscribete
                 </button>
               </div>
@@ -83,7 +85,7 @@ const Home: NextPage = () => {
             title="Tema"
             description='"Mi casa y yo serviremos al señor”'
             linkText="Servir"
-            link="www.google.com"
+            link="https://www.churchofjesuschrist.org/study/scriptures/ot/josh/24?lang=spa&id=15#p15"
             image={Jesus}
           />
           <div className=" h-8 md:h-20" />
@@ -91,7 +93,7 @@ const Home: NextPage = () => {
             title="Lema"
             description="Josue 24:15"
             linkText="Leer el lema"
-            link="www.google.com"
+            link="https://www.churchofjesuschrist.org/study/scriptures/ot/josh/24?lang=spa&id=15#p15"
             reverse
             image={Book}
           />
@@ -100,7 +102,7 @@ const Home: NextPage = () => {
             title="Himno"
             description="#154 Haz tu lo justo"
             linkText="Leer el himno"
-            link="www.google.com"
+            link="https://www.churchofjesuschrist.org/study/manual/hymns/do-what-is-right?lang=spa"
             image={Hymns}
           />
           {/* <div className="mt-36">
@@ -111,19 +113,24 @@ const Home: NextPage = () => {
         <footer className="bg-[#E9E9E9] h-64 mt-[100px] flex justify-center items-center">
           <div>
             <div className="flex items-center gap-6 justify-center mb-5">
-              <a href="facebook.com">
+              <a
+                target={"_blank"}
+                href="https://www.facebook.com/JAS.SANOSantaCruzNorte/"
+              >
                 <Image src={Face} />
               </a>
-              <a href="whatsapp.com">
+              <a target={"_blank"} href="https://wa.link/l526th">
                 <Image src={Whats} />
-              </a>
-              <a href="instagram.com">
-                <Image src={Inst} />
               </a>
             </div>
             <div className="text-[20px]">Nuestras redes sociales</div>
           </div>
         </footer>
+
+        <RegistrationFormModal
+          isOpen={registering}
+          onClose={() => setRegistering(false)}
+        />
       </div>
     </>
   );

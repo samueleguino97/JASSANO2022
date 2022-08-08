@@ -18,11 +18,16 @@ model JAS {
     birthDate DateTime
     phoneNumber String
     isLDSMember Boolean
+    isReturnedMissionary Boolean
+    profesion String
+    studies String
+    invitedBy String
     age Int
     approved Boolean
     profile_picture_url String
     ward Ward @relation(fields: [wardId], references: [id])
     wardId String
+    notes String
 }
 
 model Ward {
@@ -30,12 +35,15 @@ model Ward {
     name String @unique
     stake Stake @relation(fields: [stakeId], references: [id])
     stakeId String 
+    slug String @unique
+
     enrrolledJAS JAS[]
 } 
 
 model Stake {
     id String @id @unique @default(uuid())
     name String @unique
+slug String
     area Area @relation(fields: [areaId], references: [id])
     areaId String 
     wards Ward[]
@@ -44,5 +52,6 @@ model Stake {
 model Area {
     id String @id @unique @default(uuid())
     name String
+    slug String
     stakes Stake[]
 }
