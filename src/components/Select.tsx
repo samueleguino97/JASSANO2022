@@ -1,4 +1,4 @@
-import { Combobox } from "@headlessui/react";
+import { Combobox, Listbox } from "@headlessui/react";
 import React, { forwardRef, LegacyRef, useState } from "react";
 
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
@@ -19,7 +19,7 @@ function Select(
     placeholder: string;
     error?: string;
   },
-  ref: LegacyRef<HTMLInputElement>
+  ref: LegacyRef<HTMLButtonElement>
 ) {
   const [query, setQuery] = useState("");
   const filteredOptions =
@@ -36,31 +36,37 @@ function Select(
       <div className={`${!!error ? "text-red-400" : ""} text-sm mb-2`}>
         {label}
       </div>
-      <Combobox value={value} onChange={onChange}>
+      <Listbox value={value} onChange={onChange}>
         <div className="relative">
-          <Combobox.Input
+          <Listbox.Button
             ref={ref}
             placeholder={placeholder}
-            displayValue={(option: string) =>
-              options?.find((o) => o.id === option)?.label || ""
-            }
-            className={`border w-full h-12 pl-3 border-[#737373]  ${
+            // displayValue={(option: string) =>
+            //   options?.find((o) => o.id === option)?.label || ""
+            // }
+            className={`border w-full h-12 pl-3 border-[#737373] ${
+              !options.find((o) => o.id === value)?.label
+                ? "text-gray-400 text-sm"
+                : ""
+            }  ${
               !!error ? "border-red-400 placeholder:text-red-400" : ""
-            } rounded-xl focus:outline-orange-400 text-[#474646] pr-8`}
-            onChange={(event) => setQuery(event.target.value)}
-          />
+            } rounded-xl focus:outline-orange-400 text-[#474646] pr-4 text-left`}
+            // onChange={(event) => setQuery(event.target.value)}
+          >
+            {options.find((o) => o.id === value)?.label || placeholder}
+          </Listbox.Button>
 
-          <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
+          <Listbox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
             <SelectorIcon
               className={`h-5 w-5 text-gray-400 ${
                 !!error ? "text-red-400" : ""
               } `}
               aria-hidden="true"
             />
-          </Combobox.Button>
-          <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-xl bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+          </Listbox.Button>
+          <Listbox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-xl bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {filteredOptions.map((option) => (
-              <Combobox.Option
+              <Listbox.Option
                 key={option.id}
                 className={({ active }) =>
                   `relative cursor-default select-none py-2 pl-10 pr-4 ${
@@ -89,11 +95,11 @@ function Select(
                     ) : null}
                   </>
                 )}
-              </Combobox.Option>
+              </Listbox.Option>
             ))}
-          </Combobox.Options>
+          </Listbox.Options>
         </div>
-      </Combobox>
+      </Listbox>
     </div>
   );
 }
