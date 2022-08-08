@@ -40,17 +40,16 @@ function Select(
         <div className="relative">
           <Listbox.Button
             ref={ref}
-            placeholder={placeholder}
             // displayValue={(option: string) =>
             //   options?.find((o) => o.id === option)?.label || ""
             // }
-            className={`border w-full h-12 pl-3 border-[#737373] ${
+            className={` text-[#474646] border w-full h-12 pl-3 border-[#737373] ${
               !options.find((o) => o.id === value)?.label
                 ? "text-gray-400 text-sm"
                 : ""
             }  ${
-              !!error ? "border-red-400 placeholder:text-red-400" : ""
-            } rounded-xl focus:outline-orange-400 text-[#474646] pr-4 text-left`}
+              !!error ? "border-red-400 text-red-400 text-sm" : ""
+            } rounded-xl focus:outline-orange-400  whitespace-nowrap pr-8 text-left`}
             // onChange={(event) => setQuery(event.target.value)}
           >
             {options.find((o) => o.id === value)?.label || placeholder}

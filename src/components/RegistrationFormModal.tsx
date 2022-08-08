@@ -342,7 +342,7 @@ function RegistrationFormModal({
               </button>{" "}
               <button
                 type="submit"
-                className="inline-flex mt-2 w-full md:mt-0 justify-center rounded-md border border-transparent bg-orange-100 px-8 py-2 text-sm font-medium text-orange-900 hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+                className="inline-flex mt-2 w-full md:mt-0 justify-center rounded-md border border-transparent bg-orange-500  px-8 py-2 text-sm font-medium text-black hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
               >
                 Siguiente
               </button>
@@ -415,7 +415,7 @@ function RegistrationFormModal({
               <button
                 disabled={!executeRecaptcha || isSubmitting}
                 type="submit"
-                className="w-full mt-2 inline-flex justify-center rounded-md border border-transparent bg-orange-100 px-8 py-2 text-sm font-medium text-orange-900 hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+                className="w-full mt-2 inline-flex justify-center rounded-md border border-transparent bg-orange-500 px-8 py-2 text-sm font-medium text-black hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
               >
                 Registrarme
               </button>
