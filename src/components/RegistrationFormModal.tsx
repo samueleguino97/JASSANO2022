@@ -129,7 +129,7 @@ function RegistrationFormModal({
       captchaToken: token,
       ...data,
       wardId: data.ward,
-      birthDate: new Date(data.birthDate),
+      birthDate: new Date(data.birthDate + "T00:00"),
       phoneNumber: parseInt(data.phone),
     });
     if (response.id) {
