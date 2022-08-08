@@ -115,11 +115,16 @@ const Home: NextPage = () => {
             <div className="flex items-center gap-6 justify-center mb-5">
               <a
                 target={"_blank"}
+                rel="noreferrer"
                 href="https://www.facebook.com/JAS.SANOSantaCruzNorte/"
               >
                 <Image src={Face} />
               </a>
-              <a target={"_blank"} href="https://wa.link/l526th">
+              <a
+                target={"_blank"}
+                rel="noreferrer"
+                href="https://wa.link/l526th"
+              >
                 <Image src={Whats} />
               </a>
             </div>

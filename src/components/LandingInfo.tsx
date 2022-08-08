@@ -34,7 +34,12 @@ function LandingInfo({
           <div className=" text-[24px] md:text-[36px] mb-1 md:mb-3 font-bold ">
             {description}
           </div>
-          <a target={"_blank"} href={link} className="text-[#FF7D00]">
+          <a
+            target={"_blank"}
+            rel="noreferrer"
+            href={link}
+            className="text-[#FF7D00]"
+          >
             {linkText} <img src="arrow.svg" className="inline ml-2" />
           </a>
         </div>
