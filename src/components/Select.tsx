@@ -43,7 +43,7 @@ function Select(
             // displayValue={(option: string) =>
             //   options?.find((o) => o.id === option)?.label || ""
             // }
-            className={` text-[#474646] border w-full h-12 pl-3 border-[#737373] ${
+            className={` text-[#474646] border w-full min-w-[200px] h-12 pl-3 border-[#737373] ${
               !options.find((o) => o.id === value)?.label
                 ? "text-gray-400 text-sm"
                 : ""
