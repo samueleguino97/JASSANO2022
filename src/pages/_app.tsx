@@ -7,9 +7,20 @@ import "../styles/globals.css";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { env } from "../env/client.mjs";
 import { Toaster } from "react-hot-toast";
+import { NextPage } from "next";
+import { ReactElement, ReactNode } from "react";
+import { AppProps } from "next/app";
 
-const MyApp: AppType = ({ Component, pageProps }) => {
-  return (
+export type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactElement;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+const MyApp: React.FC<AppPropsWithLayout> = ({ Component, pageProps }) => {
+  const getLayout = Component.getLayout ?? ((page) => page);
+  return getLayout(
     <GoogleReCaptchaProvider
       reCaptchaKey={env.NEXT_PUBLIC_RECAPTCHA_KEY}
       scriptProps={{

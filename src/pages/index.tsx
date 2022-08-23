@@ -75,7 +75,7 @@ const Home: NextPage = () => {
               <div> Serviremos al Señor”</div>
               <div className="mt-2 md:mt-4 font-light text-sm md:text-[32px]">
                 {" "}
-                Josue 24:15
+                Josué 24:15
               </div>
             </div>
           </div>
@@ -83,7 +83,7 @@ const Home: NextPage = () => {
         <main className="container mx-auto px-4 pt-8 md:pt-16">
           <LandingInfo
             title="Tema"
-            description='"Mi casa y yo serviremos al señor”'
+            description='"Mi casa y yo serviremos al Señor”'
             linkText="Servir"
             link="https://www.churchofjesuschrist.org/study/scriptures/ot/josh/24?lang=spa&id=15#p15"
             image={Jesus}
@@ -91,7 +91,7 @@ const Home: NextPage = () => {
           <div className=" h-8 md:h-20" />
           <LandingInfo
             title="Lema"
-            description="Josue 24:15"
+            description="Josué 24:15"
             linkText="Leer el lema"
             link="https://www.churchofjesuschrist.org/study/scriptures/ot/josh/24?lang=spa&id=15#p15"
             reverse

@@ -1,11 +1,10 @@
 import React, { ReactElement } from "react";
 import AdminLayout from "../../components/AdminLayout";
 
-function Admin() {
-  return <div className="">Admin</div>;
+function Areas() {
+  return <div>Areas</div>;
 }
-Admin.getLayout = function getLayout(page: ReactElement) {
+Areas.getLayout = function getLayout(page: ReactElement) {
   return <AdminLayout>{page}</AdminLayout>;
 };
-
-export default Admin;
+export default Areas;

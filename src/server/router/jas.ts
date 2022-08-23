@@ -83,6 +83,8 @@ export const jasRouter = createRouter()
   })
   .query("all", {
     async resolve({ ctx }) {
-      return await ctx.prisma.jAS.findMany();
+      return await ctx.prisma.jAS.findMany({
+        include: { ward: { include: { stake: { include: { area: true } } } } },
+      });
     },
   });

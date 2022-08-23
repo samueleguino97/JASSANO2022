@@ -1,4 +1,4 @@
-import { Transition, Dialog, Combobox } from "@headlessui/react";
+import { Transition, Dialog, Combobox, Switch } from "@headlessui/react";
 import React, { Fragment, useState } from "react";
 import Input from "./Input";
 import TextArea from "./TextArea";
@@ -25,7 +25,10 @@ export type FormData = {
   isMember: boolean;
   profesion: string;
   studies: string;
+  gender: boolean;
   isReturnedMissionary: boolean;
+  firstTopicChoice: string;
+  secondTopicChoice: string;
 };
 
 const schema = z
@@ -74,15 +77,15 @@ function RegistrationFormModal({
       isMember: false,
       profesion: "",
       studies: "",
+      notes: " ",
     },
   });
   const stake = watch("stake");
   const area = watch("area");
-  const [isMember, setIsMember] = useState<boolean | null>(null);
+  const isMember = watch("isMember");
   const [step, setStep] = useState(0);
   function closeModal() {
     onClose();
-    setIsMember(null);
     setStep(0);
     reset();
   }
@@ -270,7 +273,6 @@ function RegistrationFormModal({
                   />
                 )}
               />
-
               <Controller
                 name="stake"
                 control={control}
@@ -340,22 +342,58 @@ function RegistrationFormModal({
                   />
                 )}
               />
-
-              <Input
-                label="Quien te invito"
-                placeholder="Nombre de la persona"
-                {...register("invitedBy", { required: true })}
-              />
-              <div className="md:col-span-2">
-                <TextArea
-                  style={{
-                    height: 150,
-                    paddingTop: 12,
-                    resize: "none",
-                  }}
-                  label="Informacion Adicional"
-                  placeholder="Alergias, necesidades especiales, cualquier detalle que necesitemos saber."
-                  {...register("notes", { required: true })}
+              <div className="flex flex-col gap-4 justify-center pb-[6px]">
+                <Controller
+                  name="isMember"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Switch.Group>
+                      <div className="flex flex-col gap-4 text-sm">
+                        <Switch.Label className="mr-4">
+                          Eres Miembro
+                        </Switch.Label>
+                        <Switch
+                          checked={field.value}
+                          onChange={field.onChange}
+                          className={`${
+                            field.value ? "bg-orange-600" : "bg-gray-200"
+                          } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2`}
+                        >
+                          <span
+                            className={`${
+                              field.value ? "translate-x-6" : "translate-x-1"
+                            } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+                          />
+                        </Switch>
+                      </div>
+                    </Switch.Group>
+                  )}
+                />
+                <div className="flex-1 flex items-end ">
+                  {!isMember && (
+                    <Input
+                      label="Quien te invito"
+                      placeholder="Nombre de la persona"
+                      {...register("invitedBy", { required: true })}
+                    />
+                  )}
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <label>Genero</label>
+                <Controller
+                  name="gender"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <ButtonSelect
+                      leftButtonText="Masculino"
+                      rightButtonText="Femenino"
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  )}
                 />
               </div>
             </div>
@@ -388,46 +426,144 @@ function RegistrationFormModal({
           </Dialog.Title>
           <form onSubmit={onSubmit}>
             <div className="mt-2 grid grid-cols-1  gap-5">
-              <Input
-                {...register("profesion", { required: false })}
-                label="Cual es tu profesion?/ A que te dedicas?"
-                placeholder="Ingresia tu profesion"
+              <Controller
+                name="profesion"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Select
+                    error={errors.stake?.message}
+                    ref={field.ref}
+                    placeholder="Selecciona formacion"
+                    label="Formacion académica"
+                    options={
+                      [
+                        "Bachiller",
+                        "Tecnico Medio",
+                        "Tecnico Superior",
+                        "Licenciatura",
+                        "Postgrado",
+                      ].map((p) => ({
+                        id: p,
+                        label: p,
+                      })) || []
+                    }
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
               />
-              <Input
-                {...register("studies", { required: false })}
-                label="Que estas estudiando actualmente?"
-                placeholder="ingresa tus Estudios"
+              <Controller
+                name="studies"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Select
+                    error={errors.stake?.message}
+                    ref={field.ref}
+                    placeholder="A que te dedicas"
+                    label="Actualmente a que te dedicas"
+                    options={
+                      [
+                        "Estudio",
+                        "Trabajo",
+                        "Estudio y trabajo",
+                        "Ninguna de las anteriores",
+                      ].map((p) => ({
+                        id: p,
+                        label: p,
+                      })) || []
+                    }
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
               />
 
-              <div className="flex flex-col gap-2">
-                <label>
-                  Eres miembro de la Iglesia de Jesucristo de los Santos de los
-                  Ultimos Dias?
-                </label>
+              {isMember && (
+                <div className="flex flex-col gap-2">
+                  <label>Eres misionero retornado?</label>
+                  <Controller
+                    name="isReturnedMissionary"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <ButtonSelect
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    )}
+                  />
+                </div>
+              )}
+              <div className="md:col-span-2">
                 <Controller
-                  name="isMember"
+                  name="firstTopicChoice"
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <ButtonSelect
+                    <Select
+                      error={errors.stake?.message}
+                      ref={field.ref}
+                      placeholder="Selecciona el primer tema"
+                      label="Que tema te gustaria que toquemos en la convencion"
+                      options={
+                        [
+                          "Podemos escoger enamorarnos?",
+                          "Soy un agente o un objeto en mi noviazgo?",
+                          "Existe la persona ideal?",
+                          "Como fortalecer mi noviazgo",
+                          "Como superar a un ex",
+                          "Fantasia vs Realidad",
+                        ].map((p) => ({
+                          id: p,
+                          label: p,
+                        })) || []
+                      }
                       value={field.value}
                       onChange={field.onChange}
                     />
                   )}
                 />
               </div>
-              <div className="flex flex-col gap-2">
-                <label>Eres misionero retornado?</label>
+              <div className="md:col-span-2">
                 <Controller
-                  name="isReturnedMissionary"
+                  name="secondTopicChoice"
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <ButtonSelect
+                    <Select
+                      error={errors.stake?.message}
+                      ref={field.ref}
+                      placeholder="Selecciona el segundo tema"
+                      label="Que tema te gustaria que toquemos en la convencion"
+                      options={
+                        [
+                          "¿Cómo saber si mi testimonio es suficientemente para la misión?",
+                          "¿Estoy preparado emocionalmente para la misión?",
+                          "¿Debo terminar con mi novia si voy a la misión?",
+                          "Experiencia contada Vs Experiencia vivida",
+                        ].map((p) => ({
+                          id: p,
+                          label: p,
+                        })) || []
+                      }
                       value={field.value}
                       onChange={field.onChange}
                     />
                   )}
+                />
+              </div>
+              <div className="md:col-span-2">
+                <TextArea
+                  style={{
+                    height: 150,
+                    paddingTop: 12,
+                    resize: "none",
+                  }}
+                  label="Informacion Adicional"
+                  placeholder="Alergias, necesidades especiales, cualquier detalle que necesitemos saber."
+                  {...register("notes", { required: true })}
                 />
               </div>
             </div>{" "}

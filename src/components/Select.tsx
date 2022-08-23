@@ -43,7 +43,7 @@ function Select(
             // displayValue={(option: string) =>
             //   options?.find((o) => o.id === option)?.label || ""
             // }
-            className={` text-[#474646] border w-full min-w-[200px] h-12 pl-3 border-[#737373] ${
+            className={` text-[#474646] truncate pr-8  border w-full min-w-[200px] h-12 pl-3 border-[#737373] ${
               !options.find((o) => o.id === value)?.label
                 ? "text-gray-400 text-sm"
                 : ""
@@ -63,12 +63,12 @@ function Select(
               aria-hidden="true"
             />
           </Listbox.Button>
-          <Listbox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-xl bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+          <Listbox.Options className="absolute text-ellipsis z-20 mt-1 max-h-60 w-full overflow-auto rounded-xl bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {filteredOptions.map((option) => (
               <Listbox.Option
                 key={option.id}
                 className={({ active }) =>
-                  `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                  `relative cursor-default truncate  select-none py-2 pl-10 pr-4 ${
                     active ? "bg-orange-600 text-white" : "text-gray-900"
                   }`
                 }
@@ -85,7 +85,7 @@ function Select(
                     </span>
                     {selected ? (
                       <span
-                        className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                        className={`absolute text-ellipsis inset-y-0 left-0 flex items-center pl-3 ${
                           active ? "text-white" : "text-orange-600"
                         }`}
                       >
