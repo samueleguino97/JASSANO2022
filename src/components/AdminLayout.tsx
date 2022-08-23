@@ -25,7 +25,11 @@ function AdminLayout({ children }: { children: ReactNode }) {
           </div>
         </div>
         {Links.map((link) => (
-          <Link style={{ width: "100%", height: "100%" }} href={link.to}>
+          <Link
+            key={link.to}
+            style={{ width: "100%", height: "100%" }}
+            href={link.to}
+          >
             <a
               className={`${
                 currentRoute === link.to ? "text-orange-500" : "text-gray-300"
