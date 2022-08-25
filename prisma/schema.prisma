@@ -28,6 +28,9 @@ model JAS {
     ward Ward @relation(fields: [wardId], references: [id])
     wardId String
     notes String
+    theme1 String?
+    theme2 String?
+    gender String
 }
 
 model Ward {

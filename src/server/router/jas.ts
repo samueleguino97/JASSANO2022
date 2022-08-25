@@ -2,7 +2,7 @@ import { createRouter } from "./context";
 import { z } from "zod";
 import { env } from "../../env/server.mjs";
 import { TRPCError } from "@trpc/server";
-import { differenceInYears } from "date-fns";
+import { differenceInYears, endOfYear, startOfYear } from "date-fns";
 import { Prisma } from "@prisma/client";
 
 export const jasRouter = createRouter()
@@ -21,6 +21,9 @@ export const jasRouter = createRouter()
       profesion: z.string().optional().default(""),
       invitedBy: z.string().optional().default(""),
       notes: z.string().optional().default(""),
+      gender: z.string(),
+      theme1: z.string().optional(),
+      theme2: z.string().optional(),
     }),
     async resolve({
       ctx,
@@ -43,9 +46,21 @@ export const jasRouter = createRouter()
         "Response from Google reCaptcha verification API"
       );
       const isCaptchaSuccess = captchaResponse?.score > 0.5;
+      if (
+        Math.abs(differenceInYears(input.birthDate, startOfYear(new Date()))) <
+          18 ||
+        Math.abs(differenceInYears(input.birthDate, endOfYear(new Date()))) > 30
+      ) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message:
+            "La convencion solo para personas entre 18-30 años, porfavor verifica tu edad",
+        });
+      }
       if (isCaptchaSuccess) {
+        console.log(input);
         try {
-          return await ctx.prisma.jAS.create({
+          const res = await ctx.prisma.jAS.create({
             data: {
               ...input,
               age: Math.abs(differenceInYears(input.birthDate, new Date())),
@@ -57,7 +72,10 @@ export const jasRouter = createRouter()
               phoneNumber: input.phoneNumber.toString(),
             },
           });
+          console.log(res);
+          return res;
         } catch (error) {
+          console.log(error, "Error");
           if (error instanceof Prisma.PrismaClientKnownRequestError) {
             // The .code property can be accessed in a type-safe manner
             if (error.code === "P2002") {

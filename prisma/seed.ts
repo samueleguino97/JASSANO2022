@@ -8,16 +8,16 @@ async function seedDb() {
   const santaCruzNorthId = randomUUID();
   console.log("creating areas");
 
-  //   await prisma.area.createMany({
-  //     data: [
-  //       {
-  //         name: "Santa Cruz Norte",
-  //         slug: "Bolivia Santa Cruz North",
-  //         id: santaCruzNorthId,
-  //       },
-  //       { name: "Santa Cruz", slug: "Bolivia Santa Cruz", id: santaCruzId },
-  //     ],
-  //   });
+  await prisma.area.createMany({
+    data: [
+      {
+        name: "Santa Cruz Norte",
+        slug: "Bolivia Santa Cruz North",
+        id: santaCruzNorthId,
+      },
+      { name: "Santa Cruz", slug: "Bolivia Santa Cruz", id: santaCruzId },
+    ],
+  });
   const stakes = {
     [santaCruzId]: [
       { name: "Bermejo", slug: "Bermejo Bolivia District" },
@@ -48,18 +48,18 @@ async function seedDb() {
     ],
   };
   console.log("Creating stakes ");
-  //   await prisma.stake.createMany({
-  //     data:
-  //       stakes[santaCruzId]?.map((s) => ({ ...s, areaId: santaCruzId })) || [],
-  //   });
+  await prisma.stake.createMany({
+    data:
+      stakes[santaCruzId]?.map((s) => ({ ...s, areaId: santaCruzId })) || [],
+  });
   console.log("Creating north stakes");
-  //   await prisma.stake.createMany({
-  //     data:
-  //       stakes[santaCruzNorthId]?.map((s) => ({
-  //         ...s,
-  //         areaId: santaCruzNorthId,
-  //       })) || [],
-  //   });
+  await prisma.stake.createMany({
+    data:
+      stakes[santaCruzNorthId]?.map((s) => ({
+        ...s,
+        areaId: santaCruzNorthId,
+      })) || [],
+  });
   const sWards = {
     "Santa Cruz Bolivia La Colorada Stake": {
       "El Fuerte Ward": "El Fuerte",

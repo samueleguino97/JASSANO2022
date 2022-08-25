@@ -52,6 +52,10 @@ const schema = z
     profesion: z.string().optional(),
     studies: z.string().optional(),
     isReturnedMissionary: z.boolean(),
+
+    gender: z.boolean(),
+    firstTopicChoice: z.string().nullable().optional(),
+    secondTopicChoice: z.string().nullable().optional(),
   })
   .required();
 function RegistrationFormModal({
@@ -78,6 +82,9 @@ function RegistrationFormModal({
       profesion: "",
       studies: "",
       notes: " ",
+      gender: true,
+      firstTopicChoice: "",
+      secondTopicChoice: "",
     },
   });
   const stake = watch("stake");
@@ -103,7 +110,6 @@ function RegistrationFormModal({
   const { mutateAsync } = trpc.useMutation("jas.enroll");
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
     if (!executeRecaptcha) {
       console.log("Execute recaptcha not yet available");
       return;
@@ -129,13 +135,16 @@ function RegistrationFormModal({
     ));
     try {
       const token = await executeRecaptcha("enquiryFormSubmit");
-
+      console.log(data);
       const response = await mutateAsync({
         captchaToken: token,
         ...data,
         wardId: data.ward,
+        gender: data.gender ? "Masculino" : "Femenino",
         birthDate: new Date(data.birthDate + "T00:00"),
         phoneNumber: parseInt(data.phone),
+        theme1: data.firstTopicChoice,
+        theme2: data.secondTopicChoice,
       });
       if (response?.id) {
         console.log("creation successful");
@@ -189,7 +198,6 @@ function RegistrationFormModal({
       ));
     }
   });
-  console.log(stake);
   const onSubmitFirst = handleSubmit(
     async (data) => {
       setStep((s) => s + 1);
@@ -385,7 +393,7 @@ function RegistrationFormModal({
                 <Controller
                   name="gender"
                   control={control}
-                  rules={{ required: true }}
+                  rules={{ required: false }}
                   render={({ field }) => (
                     <ButtonSelect
                       leftButtonText="Masculino"
@@ -500,7 +508,7 @@ function RegistrationFormModal({
                 <Controller
                   name="firstTopicChoice"
                   control={control}
-                  rules={{ required: true }}
+                  rules={{ required: false }}
                   render={({ field }) => (
                     <Select
                       error={errors.stake?.message}
@@ -529,8 +537,8 @@ function RegistrationFormModal({
               <div className="md:col-span-2">
                 <Controller
                   name="secondTopicChoice"
+                  rules={{ required: false }}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field }) => (
                     <Select
                       error={errors.stake?.message}
