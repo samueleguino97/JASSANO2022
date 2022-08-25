@@ -7,6 +7,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const jas = await prisma.jAS.findMany({
     include: { ward: { include: { stake: { include: { area: true } } } } },
   });
+  if (!jas.length) {
+    return res.json({ resultado: "Todavia no hay inscritos" });
+  }
 
   const ws = workbook.addWorksheet("Inscritos");
   ws.addTable({
